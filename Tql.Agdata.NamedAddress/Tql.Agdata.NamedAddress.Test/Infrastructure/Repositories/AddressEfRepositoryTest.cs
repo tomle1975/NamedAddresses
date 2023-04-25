@@ -4,29 +4,28 @@ using Tql.Agdata.NamedAddress.Infrastructure.DataMappings;
 using Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 using Xunit;
 
-namespace Tql.Agdata.NamedAddress.Test.Infrastructure.Repositories
+namespace Tql.Agdata.NamedAddress.Test.Infrastructure.Repositories;
+
+/// <summary>
+/// Tests the <see cref="AddressEfRepository" /> class.
+/// </summary>
+public class AddressEfRepositoryTest
 {
-    /// <summary>
-    /// Tests the <see cref="AddressEfRepository"/> class.
-    /// </summary>
-    public class AddressEfRepositoryTest
+    private readonly AddressEfRepository repository;
+
+    public AddressEfRepositoryTest()
     {
-        private readonly AddressEfRepository repository;
+        repository = new AddressEfRepository(new AddressEfDbContext(), new AddressRepositoryDataMapper());
+    }
 
-        public AddressEfRepositoryTest()
-        {
-            repository = new AddressEfRepository(new AddressEfDbContext(), new AddressRepositoryDataMapper());
-        }
+    [Fact]
+    public async Task GetByName_ReturnsAddress_WhenCalled()
+    {
+        var address = new Address(0, "Golf course 4", "567 Main course", null, "Atlanta", "GA", "30102", "USA");
+        await repository.Insert(address, CancellationToken.None).ConfigureAwait(false);
+        await repository.Context.SaveChangesAsync().ConfigureAwait(false);
 
-        [Fact]
-        public async Task GetByName_ReturnsAddress_WhenCalled()
-        {
-            var address = new Address(0, "Golf course 4", "567 Main course", null, "Atlanta", "GA", "30102", "USA");
-            await repository.Insert(address, CancellationToken.None).ConfigureAwait(false);
-            await repository.Context.SaveChangesAsync().ConfigureAwait(false);
-
-            var foundAddress = repository.GetByName(address.Name, CancellationToken.None).ConfigureAwait(false);
-            foundAddress.Should().NotBeNull();
-        }
+        var foundAddress = repository.GetByName(address.Name, CancellationToken.None).ConfigureAwait(false);
+        foundAddress.Should().NotBeNull();
     }
 }

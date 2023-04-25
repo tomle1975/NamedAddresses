@@ -9,15 +9,13 @@ namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 /// <inheritdoc cref="IAddressRepository" />
 public class AddressEfRepository : EfRepository<Address, long, Db.Address>, IAddressRepository
 {
-    /// <inheritdoc
-    ///     cref="EfRepository{TEntity, TEntityId, TDbEntity}(Tql.Agdata.NamedAddress.Domain.SeedWork.IUnitOfWork{Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework.AddressEfDbContext}, IRepositoryDataMapper{TEntity,TDbEntity})" />
+    /// <inheritdoc cref="EfRepository{TEntity, TEntityId, TDbEntity}(Tql.Agdata.NamedAddress.Domain.SeedWork.IUnitOfWork{Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework.AddressEfDbContext}, IRepositoryDataMapper{TEntity,TDbEntity})" />
     public AddressEfRepository(IUnitOfWork<AddressEfDbContext> unitOfWork, IRepositoryDataMapper<Address, Db.Address> repositoryMapper)
         : base(unitOfWork, repositoryMapper)
     {
     }
 
-    /// <inheritdoc
-    ///     cref="EfRepository{TEntity, TEntityId,TDbEntity}(AddressEfDbContext, IRepositoryDataMapper{TEntity,TDbEntity})" />
+    /// <inheritdoc cref="EfRepository{TEntity, TEntityId,TDbEntity}(AddressEfDbContext, IRepositoryDataMapper{TEntity,TDbEntity})" />
     public AddressEfRepository(AddressEfDbContext context, IRepositoryDataMapper<Address, Db.Address> repositoryMapper) : base(context, repositoryMapper)
     {
     }

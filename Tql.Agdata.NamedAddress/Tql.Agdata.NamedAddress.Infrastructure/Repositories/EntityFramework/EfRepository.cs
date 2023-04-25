@@ -3,6 +3,7 @@ using Tql.Agdata.NamedAddress.Infrastructure.DataMappings;
 
 namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 
+/// <inheritdoc cref="IRepository{TEntity,TEntityId}"/>
 public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, TEntityId>, IDisposable
     where TEntity : Entity<TEntityId>, IAggregateRoot<TEntityId>
     where TDbEntity : class

@@ -15,7 +15,7 @@ public interface IAddressService
     /// <summary>
     /// Get address by name.
     /// </summary>
-    Task<Result<Address>> GetByName(string name, CancellationToken cancellation);
+    Task<Result<Address?>> GetByName(string name, CancellationToken cancellation);
 
     /// <summary>
     /// Adds a new address.

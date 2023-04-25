@@ -4,9 +4,7 @@ using Tql.Agdata.NamedAddress.Domain.SeedWork;
 
 namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 
-/// <summary>
-/// Implements the <see cref="IUnitOfWork{TContext}" /> using Entity Framework Core.
-/// </summary>
+/// <inheritdoc cref="IUnitOfWork{TContext}"/>
 public class EfUnitOfWork<TContext> : IUnitOfWork<TContext>, IDisposable where TContext : DbContext, new()
 {
     private bool disposed;

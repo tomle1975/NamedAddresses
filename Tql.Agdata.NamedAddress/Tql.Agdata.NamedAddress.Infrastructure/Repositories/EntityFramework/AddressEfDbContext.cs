@@ -3,9 +3,7 @@ using Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework.Tables
 
 namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 
-/// <summary>
-/// Represents the Address Database.
-/// </summary>
+/// <inheritdoc cref="DbContext"/>
 public class AddressEfDbContext : DbContext
 {
     public DbSet<Address>? Addresses { get; set; }
