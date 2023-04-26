@@ -6,10 +6,10 @@ using Db = Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework.T
 
 namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 
-/// <inheritdoc cref="IAddressRepository" />
-public class AddressEfRepository : EfRepository<Address, long, Db.Address>, IAddressRepository
+/// <inheritdoc cref="IAddressRepository{TContext}" />
+public class AddressEfRepository : EfRepository<Address, long, Db.Address>, IAddressRepository<AddressEfDbContext>
 {
-    /// <inheritdoc cref="EfRepository{TEntity, TEntityId, TDbEntity}(Tql.Agdata.NamedAddress.Domain.SeedWork.IUnitOfWork{Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework.AddressEfDbContext}, IRepositoryDataMapper{TEntity,TDbEntity})" />
+    /// <inheritdoc cref="EfRepository{TEntity, TEntityId, TDbEntity}(IUnitOfWork{AddressEfDbContext}, IRepositoryDataMapper{TEntity,TDbEntity})" />
     public AddressEfRepository(IUnitOfWork<AddressEfDbContext> unitOfWork, IRepositoryDataMapper<Address, Db.Address> repositoryMapper)
         : base(unitOfWork, repositoryMapper)
     {
@@ -20,7 +20,7 @@ public class AddressEfRepository : EfRepository<Address, long, Db.Address>, IAdd
     {
     }
 
-    /// <inheritdoc cref="IAddressRepository.GetByName" />
+    /// <inheritdoc cref="IAddressRepository{TContext}.GetByName" />
     public async Task<Address?> GetByName(string name, CancellationToken cancellation)
     {
         if (Context.Addresses == null) return null;

@@ -3,7 +3,8 @@
 /// <summary>
 /// Represents a repository that is responsible for the persistence of domain entity.
 /// </summary>
-public interface IRepository<TEntity, in TEntityId>
+public interface IRepository<TContext, TEntity, in TEntityId>
+    where TContext : new()
     where TEntity : IAggregateRoot<TEntityId>
 {
     /// <summary>
@@ -30,4 +31,9 @@ public interface IRepository<TEntity, in TEntityId>
     /// Deletes the existing record of the <see cref="TEntity" />.
     /// </summary>
     Task Delete(TEntity entity, CancellationToken cancellation);
+
+    /// <summary>
+    /// Gets or sets database context.
+    /// </summary>
+    TContext Context { get; set; }
 }

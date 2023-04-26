@@ -3,8 +3,8 @@ using Tql.Agdata.NamedAddress.Infrastructure.DataMappings;
 
 namespace Tql.Agdata.NamedAddress.Infrastructure.Repositories.EntityFramework;
 
-/// <inheritdoc cref="IRepository{TEntity,TEntityId}"/>
-public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, TEntityId>, IDisposable
+/// <inheritdoc cref="IRepository{TContext,TEntity,TEntityId}"/>
+public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<AddressEfDbContext, TEntity, TEntityId>, IDisposable
     where TEntity : Entity<TEntityId>, IAggregateRoot<TEntityId>
     where TDbEntity : class
 {
@@ -41,7 +41,7 @@ public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, 
         disposed = true;
     }
 
-    /// <inheritdoc cref="IRepository{TEntity, TEntityId}.GetAll" />
+    /// <inheritdoc cref="IRepository{TContext, TEntity, TEntityId}.GetAll" />
     public Task<IEnumerable<TEntity>> GetAll(CancellationToken cancellation)
     {
         return cancellation.IsCancellationRequested
@@ -49,14 +49,14 @@ public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, 
             : Task.FromResult(Context.Set<TDbEntity>().AsEnumerable().Select(e => RepositoryMapper.ToEntity(e)));
     }
 
-    /// <inheritdoc cref="IRepository{TEntity, TEntityId}.GetById" />
+    /// <inheritdoc cref="IRepository{TContext, TEntity, TEntityId}.GetById" />
     public async Task<TEntity?> GetById(TEntityId id, CancellationToken cancellation)
     {
         var dbEntity = await Context.FindAsync<TDbEntity>(id, cancellation).ConfigureAwait(false);
         return dbEntity == null ? null : RepositoryMapper.ToEntity(dbEntity);
     }
 
-    /// <inheritdoc cref="IRepository{TEntity, TEntityId}.Insert" />
+    /// <inheritdoc cref="IRepository{TContext, TEntity, TEntityId}.Insert" />
     public async Task Insert(TEntity entity, CancellationToken cancellation)
     {
         if (disposed) Context = new AddressEfDbContext();
@@ -65,7 +65,7 @@ public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, 
         await Context.AddAsync(dbEntity, cancellation).ConfigureAwait(false);
     }
 
-    /// <inheritdoc cref="IRepository{TEntity, TEntityId}.Update" />
+    /// <inheritdoc cref="IRepository{TContext, TEntity, TEntityId}.Update" />
     public async Task Update(TEntity entity, CancellationToken cancellation)
     {
         if (disposed) Context = new AddressEfDbContext();
@@ -74,7 +74,7 @@ public class EfRepository<TEntity, TEntityId, TDbEntity> : IRepository<TEntity, 
         RepositoryMapper.ToDbEntity(entity, dbEntity);
     }
 
-    /// <inheritdoc cref="IRepository{TEntity, TEntityId}.Delete" />
+    /// <inheritdoc cref="IRepository{TContext, TEntity, TEntityId}.Delete" />
     public async Task Delete(TEntity entity, CancellationToken cancellation)
     {
         if (disposed) Context = new AddressEfDbContext();

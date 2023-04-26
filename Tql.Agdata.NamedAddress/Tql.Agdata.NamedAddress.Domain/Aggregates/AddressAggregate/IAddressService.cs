@@ -20,15 +20,15 @@ public interface IAddressService
     /// <summary>
     /// Adds a new address.
     /// </summary>
-    Task<Result<DateTime>> Add(Address address, CancellationToken cancellation);
+    Task<Result<long>> Add(Address address, CancellationToken cancellation);
 
     /// <summary>
     /// Updates the existing address.
     /// </summary>
-    Task<Result<DateTime>> Update(Address address, CancellationToken cancellation);
+    Task<Result<long>> Update(Address address, CancellationToken cancellation);
 
     /// <summary>
     /// Deletes the existing address.
     /// </summary>
-    Task<Result<DateTime>> Delete(Address address, CancellationToken cancellation);
+    Task<Result<long>> Delete(Address address, CancellationToken cancellation);
 }

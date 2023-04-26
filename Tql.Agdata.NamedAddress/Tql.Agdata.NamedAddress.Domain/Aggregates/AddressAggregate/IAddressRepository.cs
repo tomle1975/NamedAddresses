@@ -5,7 +5,7 @@ namespace Tql.Agdata.NamedAddress.Domain.Aggregates.AddressAggregate;
 /// <summary>
 /// Represents a repository that manages CRUD operations of addresses.
 /// </summary>
-public interface IAddressRepository : IRepository<Address, long>
+public interface IAddressRepository<TContext> : IRepository<TContext, Address, long> where TContext : new()
 {
     /// <summary>
     /// Get address by name.
