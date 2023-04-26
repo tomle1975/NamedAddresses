@@ -1,4 +1,6 @@
 using FluentValidation;
+using Tql.Agdata.NamedAddress.Api.DataMappings;
+using Tql.Agdata.NamedAddress.Api.Models;
 using Tql.Agdata.NamedAddress.Domain.Aggregates.AddressAggregate;
 using Tql.Agdata.NamedAddress.Domain.SeedWork;
 using Tql.Agdata.NamedAddress.Infrastructure.DataMappings;
@@ -15,6 +17,7 @@ builder.Services.AddScoped<IAddressRepository<AddressEfDbContext>, AddressEfRepo
 builder.Services.AddScoped<IRepositoryDataMapper<Address, Db.Address>, AddressRepositoryDataMapper>();
 builder.Services.AddScoped<IValidator<Address>, AddressValidator>();
 builder.Services.AddMemoryCache();
+builder.Services.AddScoped<IApiDataMapper<Address, AddressDto>, AddressApiDataMapper>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,10 +33,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 app.Run();
