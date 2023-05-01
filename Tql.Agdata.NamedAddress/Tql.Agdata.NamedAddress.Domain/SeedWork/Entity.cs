@@ -50,7 +50,7 @@ public abstract class Entity<TEntityId>
     /// <summary>
     /// Evaluates if 2 entities are not equal.
     /// </summary>
-    public static bool operator !=(Entity<TEntityId> left, Entity<TEntityId> right)
+    public static bool operator !=(Entity<TEntityId>? left, Entity<TEntityId>? right)
     {
         return !(left == right);
     }
